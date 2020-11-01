@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="myCanvas" width="500" height="500" style="border: 1px solid #000000">
+  </canvas>
+  <script>
+    var canvas = document.getElementById("myCanvas");
+    var cre = canvas.getContext("2d");
+    var clock = canvas.height / 2;
+    cre.translate(clock, clock);
+    clock = clock * 0.8;
+    // pradeep(); //this
+    setInterval(pradeep, 1000);
+    function pradeep() {
+      pradeepclock(cre, clock); //this
+      pradeepclocknum1(cre, clock);
+      pradeeptime(cre, clock);
+    }
+
+    function pradeepclock(cre, clock) {
+      var abc;
+      cre.beginPath();
+      cre.arc(0, 0, clock, 0, 2 * Math.PI);
+      cre.fillStyle = "blue";
+      cre.fill();
+      abc = cre.createRadialGradient(0, 0, clock * 0.75, 0, 0, clock * 0.95); //this
+      //abc = cre.createRadialGradient(0, 0, radius * 0.9, 0, 0, radius * 1.25);
+      abc.addColorStop(0, "#FF0000");
+      abc.addColorStop(0.5, "#000000");
+      abc.addColorStop(1, "#FFFF00");
+      cre.strokeStyle = abc;
+      cre.lineWidth = clock * 0.2;
+      cre.stroke();
+      cre.beginPath();
+      cre.arc(0, 0, clock * 0.1, 0, 2 * Math.PI);
+      cre.fillStyle = "black";
+      cre.fill();
+    }
+
+    function pradeepclocknum1(cre, clock) {
+      var x, y;
+      cre.font = clock * 0.15 + "px tahoma";
+      cre.textBaseline = "middle";
+      cre.textAlign = "center";
+      for (x = 1; x < 13; x++) {
+        y = (x * Math.PI) / 6;
+        cre.rotate(y);
+        cre.translate(0, -clock * 0.8);
+        cre.rotate(-y);
+        cre.fillText(x.toString(), 0, 0);
+        cre.rotate(y);
+        cre.translate(0, clock * 0.8);
+        cre.rotate(-y);
+      }
+    }
+    function pradeeptime(cre, clock) {
+      var now = new Date();
+      var hour = now.getHours();
+      var min = now.getMinutes();
+      var sec = now.getSeconds();
+      hour = hour % 12;
+
+      hour =
+        (hour * Math.PI) / 6 +
+        (min * Math.PI / (60 * 60)) +
+        (sec * Math.PI / (360 * 60));
+      pradeepmin(cre, hour, clock * 0.5, clock * 0.06);
+      min = (min * Math.PI / 30) + (sec * Math.PI / (30 * 60));
+      pradeepmin(cre, min, clock * 0.7, clock * 0.06);
+      sec = (sec * Math.PI) / 30;
+      pradeepmin(cre, sec, clock * 0.8, clock * 0.06);
+    }
+    function pradeepmin(cre, pos, length, width) {
+      cre.beginPath();
+      cre.lineWidth = width;
+      cre.lineCap = "round";
+      cre.moveTo(0, 0);
+      cre.rotate(pos);
+      cre.lineTo(0, -length);
+      cre.stroke();
+      cre.rotate(- pos);
+    }
+  </script>
+</body>
+
+</html>
